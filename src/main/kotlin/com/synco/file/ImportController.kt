@@ -16,6 +16,6 @@ class ImportController(val importService: ImportService) {
     @PostMapping("/")
     @ResponseBody
     fun receiveFile(@RequestParam("file") file: MultipartFile?) {
-        importService.saveToDisk(file!!)
+        return importService.importFile(file!!)
     }
 }

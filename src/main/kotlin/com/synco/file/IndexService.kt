@@ -8,5 +8,5 @@ import org.apache.lucene.document.Document
 interface IndexService {
     fun indexString(name: String, value: String)
 
-    fun searchString(name: String, q: String)
+    fun searchString(name: String, q: String): MutableList<Any?>?
 }

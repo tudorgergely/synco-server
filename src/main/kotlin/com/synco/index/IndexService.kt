@@ -1,6 +1,6 @@
 package com.synco.index
 
-import com.synco.file.File
+import com.synco.domain.File
 
 /**
  * @author Tudor Gergely, Catalysts GmbH

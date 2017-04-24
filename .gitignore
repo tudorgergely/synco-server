@@ -24,4 +24,4 @@ dist/
 nbdist/
 .nb-gradle/
 
-com.synco.file.File
+com.synco.domain.File

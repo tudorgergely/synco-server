@@ -1,5 +1,8 @@
 package com.synco.file
 
+import com.synco.domain.File
+import com.synco.domain.LocalLocation
+import com.synco.domain.Location
 import org.apache.lucene.analysis.standard.StandardAnalyzer
 import org.apache.lucene.document.Document
 import org.apache.lucene.document.Field
@@ -39,16 +42,16 @@ class IndexServiceImpl : IndexService {
     }
 
     @Transactional
-    override fun searchString(name: String, q: String) {
+    override fun searchString(name: String, q: String): MutableList<Any?>? {
         val fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(entityManager)
         val qb = fullTextEntityManager.searchFactory
-                .buildQueryBuilder().forEntity(File::class.java).get()
+                .buildQueryBuilder().forEntity(LocalLocation::class.java).get()
         val luceneQuery = qb
                 .keyword()
-                .onFields(name)
+                .onFields("fileMetadata.name")
                 .matching(q)
                 .createQuery()
-        val jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, File::class.java)
-        val result = jpaQuery.resultList
+        val jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, LocalLocation::class.java)
+        return jpaQuery.resultList
     }
 }

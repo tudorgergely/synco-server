@@ -6,5 +6,5 @@ import org.springframework.web.multipart.MultipartFile
  * @author Tudor Gergely, Catalysts GmbH
  */
 interface ImportService {
-    fun saveToDisk(file: MultipartFile)
+    fun importFile(file: MultipartFile)
 }

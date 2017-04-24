@@ -1,21 +1,20 @@
 package com.synco.file
 
+import com.synco.backup.BackupService
+import com.synco.domain.File
+import com.synco.domain.FileMetadata
+import com.synco.domain.LocalLocation
+import org.apache.tika.Tika
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
-import java.io.File
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.nio.file.StandardCopyOption
+import java.io.ByteArrayOutputStream
 
 @Service
-class ImportServiceImpl(val indexService: IndexService, val repository: FileRepository) : ImportService {
-    override fun saveToDisk(file: MultipartFile) {
-        val path = System.getProperty("user.home") + File.separator + "synco_files"
-        val customDir = File(path)
-        val filePath = customDir.absolutePath + File.separator + file.originalFilename
-        if (customDir.exists() || customDir.mkdirs()) {
-            Files.copy(file.inputStream, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING)
-        }
-        repository.save(com.synco.file.File(filePath))
+class ImportServiceImpl(val localBackupService: BackupService<LocalLocation>, val repository: LocalLocationRepository) : ImportService {
+    override fun importFile(file: MultipartFile) {
+        val content = Tika().parseToString(file.inputStream)
+        val location = localBackupService.save(File(FileMetadata(file.originalFilename, file.size.toFloat(), content), file.inputStream));
+
+        repository.save(location)
     }
 }

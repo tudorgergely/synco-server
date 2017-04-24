@@ -1,13 +1,13 @@
 package com.synco.backup
 
 import com.synco.domain.Location
-import com.synco.file.File
+import com.synco.domain.File
 
 /**
  * @author Tudor Gergely, Catalysts GmbH
  */
-interface BackupService {
-    fun save(location: Location, file: File)
+interface BackupService<T> {
+    fun save(file: File): T
 
-    fun retrieve(location: Location)
+    fun retrieve(location: T): File
 }

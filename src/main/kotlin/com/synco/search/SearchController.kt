@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.apache.lucene.search.ScoreDoc
 import org.apache.lucene.search.IndexSearcher
 import org.apache.lucene.index.DirectoryReader
-
+import org.springframework.web.bind.annotation.ResponseBody
 
 
 /**
@@ -17,5 +17,6 @@ import org.apache.lucene.index.DirectoryReader
 @RequestMapping("/api/search")
 class SearchController(val indexService: IndexService) {
     @PostMapping("/")
-    fun search(q: String) = indexService.searchString("path", q)
+    @ResponseBody
+    fun search(q: String) = indexService.searchString("name", q)
 }

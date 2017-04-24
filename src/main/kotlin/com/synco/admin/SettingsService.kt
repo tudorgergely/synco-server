@@ -9,10 +9,10 @@ interface SettingsService {
     /**
      *
      */
-    fun addLocation(location: Location)
+    fun addLocation(location: Location<*>)
 
     /**
      *
      */
-    fun addEncryptedLocation(location: Location)
+    fun addEncryptedLocation(location: Location<*>)
 }
