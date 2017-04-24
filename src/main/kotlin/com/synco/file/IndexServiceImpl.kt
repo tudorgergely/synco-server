@@ -48,7 +48,7 @@ class IndexServiceImpl : IndexService {
                 .buildQueryBuilder().forEntity(LocalLocation::class.java).get()
         val luceneQuery = qb
                 .keyword()
-                .onFields("fileMetadata.name")
+                .onFields("fileMetadata.name", "fileMetadata.content")
                 .matching(q)
                 .createQuery()
         val jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, LocalLocation::class.java)

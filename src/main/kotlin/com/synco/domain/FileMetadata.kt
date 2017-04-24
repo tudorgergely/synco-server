@@ -1,12 +1,10 @@
 package com.synco.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import org.hibernate.search.annotations.Analyzer
 import org.hibernate.search.annotations.Field
-import org.hibernate.search.annotations.Fields
-import org.hibernate.search.annotations.Indexed
-import org.hibernate.search.annotations.Store
+import javax.persistence.Column
 import javax.persistence.Embeddable
-import javax.persistence.Transient
 
 /**
  * @author Tudor Gergely, Catalysts GmbH
@@ -14,6 +12,7 @@ import javax.persistence.Transient
 @Embeddable
 data class FileMetadata(
         @Field
+        @Analyzer(definition = "edgeNGramAnalyzer")
         var name: String = "",
 
         @Field
@@ -21,5 +20,7 @@ data class FileMetadata(
 
         @Field
         @JsonIgnore
+        @Analyzer(definition = "edgeNGramAnalyzer")
+        @Column(columnDefinition = "text")
         var content: String = ""
 )

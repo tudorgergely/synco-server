@@ -10,7 +10,7 @@ import java.io.*
 @Service
 class LocalBackupServiceImpl : BackupService<LocalLocation> {
     override fun retrieve(location: LocalLocation): File {
-        val path = location.payload;
+        val path = location.path;
         try {
             return File(location.fileMetadata,  FileInputStream(path))
         } catch (e: FileNotFoundException) {
@@ -25,6 +25,6 @@ class LocalBackupServiceImpl : BackupService<LocalLocation> {
         if (customDir.exists() || customDir.mkdirs()) {
             FileOutputStream(filePath).use { outputStream -> file.inputStream.copyTo(outputStream) }
         }
-        return LocalLocation(payload = filePath, fileMetadata = file.metadata)
+        return LocalLocation(path = filePath, fileMetadata = file.metadata)
     }
 }
