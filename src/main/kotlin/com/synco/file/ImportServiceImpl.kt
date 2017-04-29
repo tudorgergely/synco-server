@@ -11,8 +11,14 @@ import org.springframework.web.multipart.MultipartFile
 @Service
 class ImportServiceImpl(val localBackupService: BackupService<LocalLocation>, val repository: LocalLocationRepository) : ImportService {
     override fun importFile(file: MultipartFile) {
-        val content = Tika().parseToString(file.inputStream).replace("[^A-Za-z]+".toRegex(), " ")
-        val location = localBackupService.save(File(FileMetadata(file.originalFilename, file.size.toFloat(), content), file.inputStream));
+        val f = java.io.File(file.originalFilename)
+        file.transferTo(f)
+        importFile(f)
+    }
+
+    override fun importFile(file: java.io.File) {
+        val content = Tika().parseToString(file.inputStream()).replace("[^A-Za-z]+".toRegex(), " ")
+        val location = localBackupService.save(File(FileMetadata(file.name, file.length().toFloat(), content), file.inputStream()));
 
         repository.save(location)
     }

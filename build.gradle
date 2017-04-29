@@ -42,12 +42,15 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-websocket')
     compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '1.5.1.RELEASE'
+    compile("org.springframework.boot:spring-boot-starter-integration")
+    compile("org.springframework.integration:spring-integration-feed")
+    compile("org.springframework.integration:spring-integration-file")
 
     compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.5'
 
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '1.5.1.RELEASE'
-
     compile group: 'org.jetbrains.kotlin', name: 'kotlin-reflect', version: '1.0.6'
+
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.8.Final'
 
     compile group: 'org.hibernate', name: 'hibernate-search-orm', version: '5.7.0.Final'
