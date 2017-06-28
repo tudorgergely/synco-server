@@ -46,6 +46,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-integration")
     compile("org.springframework.integration:spring-integration-feed")
     compile("org.springframework.integration:spring-integration-file")
+    compile 'com.github.spring-social:spring-social-google:latest.release'
 
     compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.5'
 

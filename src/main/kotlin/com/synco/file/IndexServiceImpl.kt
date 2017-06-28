@@ -1,5 +1,7 @@
 package com.synco.file
 
+import com.synco.activity.ActivityRepository
+import com.synco.domain.Activity
 import com.synco.domain.File
 import com.synco.domain.LocalLocation
 import com.synco.domain.Location
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service
 import org.springframework.data.domain.ExampleMatcher.matching
 import org.hibernate.loader.entity.plan.EntityLoader.forEntity
 import org.hibernate.search.jpa.FullTextEntityManager
+import java.util.*
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 import javax.persistence.PersistenceContextType
@@ -25,7 +28,7 @@ import javax.transaction.Transactional
 
 
 @Service
-class IndexServiceImpl : IndexService {
+class IndexServiceImpl(val activityRepository: ActivityRepository) : IndexService {
 
     @PersistenceContext(type = PersistenceContextType.EXTENDED, name = "filesPU")
     private val entityManager: EntityManager? = null
@@ -35,6 +38,8 @@ class IndexServiceImpl : IndexService {
     final val writer = IndexWriter(directory, config)
 
     override fun indexString(name: String, value: String) {
+        activityRepository.save(Activity(type = "index", content = name, date = Date(), locations = arrayListOf("hdd")))
+
         val doc = Document()
         doc.add(TextField(name, value, Field.Store.YES))
         writer.addDocument(doc)
