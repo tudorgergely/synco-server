@@ -17,9 +17,9 @@ class ExportController(val locationRepository: LocalLocationRepository, val acti
     @GetMapping("/{id}")
     @CrossOrigin
     fun downloadFile(@PathVariable id: Long, response: HttpServletResponse) {
-        val location: LocalLocation = locationRepository.findOne(id).get()
+        val location: LocalLocation = locationRepository.findById(id).get()
 
-        activityRepository.save(Activity(type = "download", content = location.fileMetadata.name!!, date = Date(), locations = arrayListOf("hdd")))
+        activityRepository.save(Activity(type = "download", content = location.fileMetadata.name, date = Date(), locations = arrayListOf("hdd")))
 
         response.contentType = "application/x-msdownload"
         response.setHeader("Content-disposition", "attachment; filename=" + location.fileMetadata.name)
