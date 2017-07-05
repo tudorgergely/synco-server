@@ -1,6 +1,7 @@
 package com.synco.domain
 
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory
+import org.apache.lucene.analysis.miscellaneous.WordDelimiterFilterFactory
 import org.apache.lucene.analysis.ngram.EdgeNGramFilterFactory
 import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory
 import org.apache.lucene.analysis.standard.StandardTokenizerFactory
@@ -18,6 +19,7 @@ import javax.persistence.Id
         name = "edgeNGramAnalyzer",
         tokenizer = TokenizerDef(factory = StandardTokenizerFactory::class),
         filters = arrayOf(
+                TokenFilterDef(factory = WordDelimiterFilterFactory::class),
                 TokenFilterDef(factory = LowerCaseFilterFactory::class),
                 TokenFilterDef(
                         factory = SnowballPorterFilterFactory::class,

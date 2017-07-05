@@ -2,6 +2,7 @@ package com.synco.search
 
 import com.synco.activity.ActivityRepository
 import com.synco.domain.Activity
+import com.synco.domain.File
 import com.synco.file.IndexService
 import org.apache.http.entity.ContentType
 import org.springframework.stereotype.Controller
@@ -22,8 +23,12 @@ class SearchController(val indexService: IndexService, val activityRepository: A
     @ResponseBody
     @CrossOrigin
     fun search(@RequestBody q: Map<String, String>): MutableList<Any?>? {
-        activityRepository.save(Activity(type = "search", content = q.get("q")!!, date = Date(), locations = arrayListOf("google", "hdd")))
+        val s =  q.get("q")!!
+        if (s.length > 3) {
+            activityRepository.save(Activity(type = "search", content = s, date = Date(), locations = arrayListOf("google", "hdd")))
+            return indexService.searchString("name", q.get("q")!!)
+        }
 
-        return indexService.searchString("name", q.get("q")!!)
+        return mutableListOf()
     }
 }

@@ -1,9 +1,7 @@
 package com.synco.domain
 
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
 /**
  * @author Tudor Gergely, Catalysts GmbH
@@ -14,8 +12,14 @@ class Activity(
         @GeneratedValue
         var id: Long? = null,
 
+        @Column
         var date: Date,
+        @Column
         var type: String,
+
+        @Column
+        @ElementCollection
         var locations: List<String>,
-        var content: String) {
-}
+        @Column
+        var content: String
+)

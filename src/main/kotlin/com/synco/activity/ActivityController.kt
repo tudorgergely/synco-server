@@ -1,8 +1,11 @@
 package com.synco.activity
 
 import com.synco.domain.Activity
+import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseBody
 import java.time.Duration
 import java.util.*
 
@@ -10,10 +13,13 @@ import java.util.*
  * @author Tudor Gergely, Catalysts GmbH
  */
 @RequestMapping("/timeline")
+@Controller
 class ActivityController(val activityRepository: ActivityRepository) {
-    @GetMapping("/")
+    @GetMapping("")
+    @CrossOrigin
+    @ResponseBody
     fun getTimeline(): TimelineDTO {
-        val activities = activityRepository.findAll()
+        val activities = activityRepository.findFirst50ByOrderByDateDesc()
         val today = Date()
         val todayItems = ArrayList<Activity>()
         val yesterdayItems = ArrayList<Activity>()
@@ -48,5 +54,12 @@ class ActivityController(val activityRepository: ActivityRepository) {
         val timeline = TimelineDTO(timelineItems)
 
         return timeline
+    }
+
+    @GetMapping("/recentSearches")
+    @ResponseBody
+    @CrossOrigin
+    fun getRecentSearches(): List<Activity> {
+        return activityRepository.findFirst5ByTypeOrderByDateDesc("search")
     }
 }
