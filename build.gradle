@@ -64,6 +64,10 @@ dependencies {
     compile group: 'org.apache.tika', name: 'tika-parsers', version: '1.14'
 
     compile 'com.google.apis:google-api-services-drive:v2-rev265-1.22.0'
+
+    // https://mvnrepository.com/artifact/org.cryptonode.jncryptor/jncryptor
+    compile group: 'org.cryptonode.jncryptor', name: 'jncryptor', version: '1.2.0'
+
 }
 
 dependencyManagement {

@@ -1,6 +1,7 @@
 package com.synco.admin
 
 import com.synco.domain.BackupLocation
+import com.synco.domain.GoogleToken
 import com.synco.domain.SyncLocation
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
@@ -23,6 +24,15 @@ class SettingsController(val settingsService: SettingsService) {
     @CrossOrigin
     fun setSyncPath(@RequestBody path: SyncLocation): String {
         return settingsService.addSyncLocation(path.path)
+    }
+
+    @PostMapping("/google")
+    @ResponseBody
+    @CrossOrigin
+    fun addGoogle(@RequestBody token: GoogleToken): String {
+        settingsService.addGoogleToken(token = token.token, userId = token.userId!!)
+
+        return token.token
     }
 
     @GetMapping("/backupPath")

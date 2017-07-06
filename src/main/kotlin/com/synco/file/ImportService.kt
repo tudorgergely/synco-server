@@ -10,4 +10,5 @@ interface ImportService {
     fun importFile(file: MultipartFile)
 
     fun importFile(file: java.io.File)
+
 }
